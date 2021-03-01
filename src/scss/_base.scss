@@ -1,0 +1,23 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; // 10/16 = 62.5
+
+  @media only screen and (max-width: $bp-largest) {
+    font-size: 50%; // 8/16 = 50
+  }
+}
+
+body {
+  font-family: $font-primary;
+  color: $color-primary;
+  font-weight: 400;
+  line-height: 1.5;
+}

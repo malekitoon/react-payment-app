@@ -1,0 +1,22 @@
+.form-group {
+  padding: .3rem 0 1rem;
+
+  &__label {
+
+  }
+
+  &__input {
+    border: 1px solid green;
+  }
+
+  &__select {
+
+  }
+
+  &__error {
+    color: $color-red;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    margin-top: .3rem;
+  }
+}

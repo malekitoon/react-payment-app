@@ -1,10 +1,9 @@
 import React from 'react';
-import PaymentPage from './pages/payment-page/payment-page.component';
-import './App.css';
+import CheckoutPage from './pages/checkout-page';
 
 const App = () => (
   <div className='app'>
-    <PaymentPage />
+    <CheckoutPage />
   </div>
 );
 

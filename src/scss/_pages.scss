@@ -1,0 +1,36 @@
+.page {
+  font-size: 1.6rem;
+  padding: 2rem;
+  
+  &__checkout {
+    border: 1px solid red;
+
+    .cart {
+      .product {
+        padding: 1rem 0;
+
+        &__details {
+          margin: .4rem 0;
+        }
+      }
+    }
+
+    .payment {
+      &__form {
+
+      }
+
+      &__response {
+
+        .message {
+          &--success { color: $color-blue; }
+          &--fail { color: $color-red; }
+      
+          &__item {
+            margin: .5rem 0;
+          }
+        }
+      }
+    }
+  }
+}
