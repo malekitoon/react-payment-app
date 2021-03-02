@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Formik } from 'formik';
-// eslint-disable-next-line no-unused-vars
 import { ROOT_URL, ACCEPTABLE_CARD_TYPES } from '../../helpers/constants';
 import {
   validateCardType,
@@ -15,19 +14,18 @@ import FormInput from '../form-elements/form-input';
 import FormSelect from '../form-elements/form-select';
 
 const PaymentForm = ({ onConfirm }) => {
-  // eslint-disable-next-line no-unused-vars
   const [cardTypes, setCardTypes] = useState([]);
 
   useEffect(() => {
-    // axios.get(`${ROOT_URL}/5d145fa22f0000ff3ec4f030`)
-    //   .then(response => {
-    //     setCardTypes(response.data.cardTypes.filter(cardType => (
-    //       ACCEPTABLE_CARD_TYPES[cardType.value]
-    //     )));
-    //   })
-    //   .catch(() => {
-    //     setCardTypes([]);
-    //   });
+    axios.get(`${ROOT_URL}/5d145fa22f0000ff3ec4f030`)
+      .then(response => {
+        setCardTypes(response.data.cardTypes.filter(cardType => (
+          ACCEPTABLE_CARD_TYPES[cardType.value]
+        )));
+      })
+      .catch(() => {
+        setCardTypes([]);
+      });
   }, []);
 
   const initialValues = {
@@ -97,8 +95,6 @@ const PaymentForm = ({ onConfirm }) => {
               options={cardTypes}
             >
               <option value=''>- Select Card Type -</option>
-              <option value='9'>Dummy</option>
-              <option value='4'>Amex</option>
               {cardTypes.map(type => (
                 <option key={type.value} value={type.id}>{type.value}</option>
               ))}
@@ -116,6 +112,7 @@ const PaymentForm = ({ onConfirm }) => {
               id='expirationDate'
               name='expirationDate'
               type='text'
+              style={{ minWidth: '70px', width: '30%' }}
             />
 
             <FormInput
@@ -132,13 +129,17 @@ const PaymentForm = ({ onConfirm }) => {
               type='email'
             />
 
-            <button
-              type='submit'
-              className='btn'
-              disabled={!dirty || !isValid || isValidating || isSubmitting}
-            >
-              Confirm Payment
-            </button>
+            <div className='form-group'>
+              <div className='form-group__element'>
+                <button
+                  type='submit'
+                  className='btn'
+                  disabled={!dirty || !isValid || isValidating || isSubmitting}
+                >
+                  Confirm Payment
+                </button>
+              </div>
+            </div>
           </form>
         )}
       </Formik>
