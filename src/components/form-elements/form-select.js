@@ -9,15 +9,17 @@ const FormSelect = ({ label, className, ...props }) => {
     <div className='form-group'>
       <label htmlFor={id || name} className='form-group__label'>{label}</label>
 
-      <select
-        className={`form-group__input ${className}`}
-        {...field}
-        {...props}
-      />
+      <div className='form-group__element'>
+        <select
+          className={`form-group__select ${className}`}
+          {...field}
+          {...props}
+        />
 
-      {meta.touched && meta.error && (
+        {meta.touched && meta.error && (
         <div className='form-group__error'>{meta.error}</div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

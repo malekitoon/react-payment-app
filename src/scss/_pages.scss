@@ -1,21 +1,29 @@
+.app {
+  display: grid;
+  grid-template-rows: min-content;
+  grid-template-columns: [full-start] 1fr [center-start] minmax(min-content, 120rem) [center-end] 1fr [full-end];
+  gap: 3rem;
+}
 .page {
+  grid-column: center-start / center-end;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  gap: 3rem;
   font-size: 1.6rem;
-  padding: 2rem;
+  padding: 3rem;
   
   &__checkout {
-    border: 1px solid red;
+    .product {
+      padding: 1rem 0;
 
-    .cart {
-      .product {
-        padding: 1rem 0;
-
-        &__details {
-          margin: .4rem 0;
-        }
+      &__details {
+        margin: .4rem 0;
       }
     }
 
     .payment {
+      
+
       &__form {
 
       }

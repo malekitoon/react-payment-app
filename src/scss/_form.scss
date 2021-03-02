@@ -1,16 +1,25 @@
 .form-group {
+  display: flex;
+  flex-wrap: wrap;
+
   padding: .3rem 0 1rem;
 
   &__label {
+    flex: 0 0 15rem;
+  }
 
+  &__element {
+    flex: 1 0 20rem;
+
+    > * { width: 100%; }
   }
 
   &__input {
-    border: 1px solid green;
+    padding: .75rem 1.25rem;
   }
 
   &__select {
-
+    padding: .75rem 1.25rem;
   }
 
   &__error {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Formik } from 'formik';
+// eslint-disable-next-line no-unused-vars
 import { ROOT_URL, ACCEPTABLE_CARD_TYPES } from '../../helpers/constants';
 import {
   validateCardType,
@@ -13,18 +14,19 @@ import FormInput from '../form-elements/form-input';
 import FormSelect from '../form-elements/form-select';
 
 const PaymentForm = ({ onConfirm }) => {
+  // eslint-disable-next-line no-unused-vars
   const [cardTypes, setCardTypes] = useState([]);
 
   useEffect(() => {
-    axios.get(`${ROOT_URL}/5d145fa22f0000ff3ec4f030`)
-      .then(response => {
-        setCardTypes(response.data.cardTypes.filter(cardType => (
-          ACCEPTABLE_CARD_TYPES[cardType.value]
-        )));
-      })
-      .catch(() => {
-        setCardTypes([]);
-      });
+    // axios.get(`${ROOT_URL}/5d145fa22f0000ff3ec4f030`)
+    //   .then(response => {
+    //     setCardTypes(response.data.cardTypes.filter(cardType => (
+    //       ACCEPTABLE_CARD_TYPES[cardType.value]
+    //     )));
+    //   })
+    //   .catch(() => {
+    //     setCardTypes([]);
+    //   });
   }, []);
 
   const initialValues = {
@@ -39,33 +41,33 @@ const PaymentForm = ({ onConfirm }) => {
     const errors = {};
 
     const errCardType = validateCardType(values.cardType);
-    const errCardNumber = validateCardNumber(values.cardNumber); // OK
-    const errExpirationDate = validateExpirationDate(values.expirationDate);
-    const errName = validateName(values.name);
-    const errEmail = validateEmail(values.email); // OK
-
     if (errCardType) errors.cardType = errCardType;
+
+    const errCardNumber = validateCardNumber(values.cardNumber, values.cardType);
     if (errCardNumber) errors.cardNumber = errCardNumber;
+
+    const errExpirationDate = validateExpirationDate(values.expirationDate);
     if (errExpirationDate) errors.expirationDate = errExpirationDate;
+
+    const errName = validateName(values.name);
     if (errName) errors.name = errName;
+
+    const errEmail = validateEmail(values.email);
     if (errEmail) errors.email = errEmail;
 
     return errors;
   };
 
   const handleFormSubmit = (values, { setSubmitting }) => {
-    console.log('form was submitted!!!');
-    console.log(values);
-
-    // const url = `${ROOT_URL}/5d8de422310000b19d2b517a`;
-    const url = `${ROOT_URL}/5d8de441310000a2612b517c`;
+    const url = `${ROOT_URL}/5d8de422310000b19d2b517a`; // success
+    // const url = `${ROOT_URL}/5d8de441310000a2612b517c`; // fail
 
     const data = { ...values, id: parseInt(values.cardType, 10) };
 
     axios.post(url, data)
-      .then(response => { onConfirm(response.data); })
-      .catch(error => { onConfirm(error.response.data); })
-      .finally(() => { setSubmitting(false); });
+      .then(response => onConfirm(response.data))
+      .catch(error => onConfirm(error.response.data))
+      .finally(() => setSubmitting(false));
   };
 
   return (
@@ -90,6 +92,8 @@ const PaymentForm = ({ onConfirm }) => {
               options={cardTypes}
             >
               <option value=''>- Select Card Type -</option>
+              <option value='9'>Dummy</option>
+              <option value='4'>Amex</option>
               {cardTypes.map(type => (
                 <option key={type.value} value={type.id}>{type.value}</option>
               ))}
@@ -125,6 +129,7 @@ const PaymentForm = ({ onConfirm }) => {
 
             <button
               type='submit'
+              className='btn'
               disabled={!dirty || !isValid || isValidating || isSubmitting}
             >
               Confirm Payment

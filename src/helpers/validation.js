@@ -1,11 +1,16 @@
+import { ACCEPTABLE_CARD_TYPES } from './constants';
+
 export const PAYMENT_REGEX = {
   cardNumber: {
     content: /^\d*$/i,
     length: /^.{16}$/,
     lengthAmex: /^.{15}$/,
   },
-  expirationDate: /^[A-Za-z]+(?:['-\s]?[A-Za-z]+){2,20}$/i,
-  name: /^[A-Za-z]+(?:['-\s]?[A-Za-z]+){2,20}$/i,
+  expirationDate: /^(!00|0[1-9]|1[0-2])\/[0-9]{2}$/,
+  name: {
+    content: /^[a-zA-Z]+(\s[a-zA-Z]+)*$/,
+    length: /^.{1,50}$/,
+  },
   email: {
     content: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
     length: /^.{0,320}$/,
@@ -16,55 +21,50 @@ export const validateCardType = value => {
   if (!value) {
     return 'Card type is required';
   }
-  // if (!(REGEX_RULES.cardNumber.test(value))) {
-  //   return 'Card number must contain only numbers ';
-  // }
-  return undefined;
+  return null;
 };
 
-export const validateCardNumber = (value, cartType) => {
+export const validateCardNumber = (value, cardType) => {
   if (!value) {
     return 'Card number is required';
   }
   if (!(PAYMENT_REGEX.cardNumber.content.test(value))) {
-    return 'Card number must contain only numbers ';
+    return 'Card number must contain only numbers';
   }
 
-  const isAmex = cartType === 'Amex';
+  const isAmex = cardType === ACCEPTABLE_CARD_TYPES.Amex.id;
   const msg = `Card number must contain ${isAmex ? '15' : '16'} characters`;
-  if (isAmex && !(PAYMENT_REGEX.cardNumber.lengthAmex.test(value))) {
-    return msg;
-  } if (!(PAYMENT_REGEX.cardNumber.length.test(value))) {
+  if (isAmex) {
+    if (!(PAYMENT_REGEX.cardNumber.lengthAmex.test(value))) {
+      return msg;
+    }
+  } else if (!(PAYMENT_REGEX.cardNumber.length.test(value))) {
     return msg;
   }
 
-  return undefined;
+  return null;
 };
 
 export const validateExpirationDate = value => {
   if (!value) {
     return 'Expiration date is required';
   }
-  // if (!(REGEX_RULES.expirationDate.test(value))) {
-  //   return 'Please enter a valid expiration date in MM/YY format';
-  // }
-  return undefined;
+  if (!(PAYMENT_REGEX.expirationDate.test(value))) {
+    return 'Enter a valid expiration date in MM/YY format';
+  }
+  return null;
 };
 
 export const validateName = value => {
   if (!value) {
-    return 'Enter your first name';
+    return 'Name is required';
   }
-  // if (!(REGEX_TRIMMED.test(value))) {
-  //   return 'There should not be whitespaces around the first name';
-  // } if (!(REGEX_NAME_CONTENT.test(value))) {
-  //   return 'Enter a valid first name';
-  // } if (!(REGEX_NAME_LENGTH_MIN.test(value))) {
-  //   return 'First name should contain 2 characters minimum';
-  // } if (!(REGEX_NAME_LENGTH_MAX.test(value))) {
-  //   return 'First name cannot exceed 20 symbols';
-  // }
-  return undefined;
+  if (!(PAYMENT_REGEX.name.content.test(value))) {
+    return 'Name must contain only latin characters and 1 space between words';
+  } if (!(PAYMENT_REGEX.name.length.test(value))) {
+    return 'Name cannot exceed 50 symbols';
+  }
+  return null;
 };
 
 export const validateEmail = value => {
@@ -75,5 +75,5 @@ export const validateEmail = value => {
       return 'Email cannot exceed 320 symbols';
     }
   }
-  return undefined;
+  return null;
 };

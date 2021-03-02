@@ -10,14 +10,24 @@ html {
   box-sizing: border-box;
   font-size: 62.5%; // 10/16 = 62.5
 
-  @media only screen and (max-width: $bp-largest) {
-    font-size: 50%; // 8/16 = 50
-  }
+  // @media only screen and (max-width: $bp-largest) {
+  //   font-size: 50%; // 8/16 = 50
+  // }
 }
 
 body {
   font-family: $font-primary;
-  color: $color-primary;
+  color: $color-black;
   font-weight: 400;
   line-height: 1.5;
+}
+
+.btn {
+  font-family: $font-primary;
+  font-size: 1.5rem;
+  padding: .75rem 1.75rem;
+  cursor: pointer;
+  pointer-events: all !important;
+  
+  &:disabled { cursor: not-allowed; }
 }

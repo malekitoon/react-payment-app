@@ -1,19 +1,18 @@
 import React from 'react';
 import { DateTime } from 'luxon';
-import Cart from '../components/cart';
+import Product from '../components/product';
 import Payment from '../components/payment';
 
 const CheckoutPage = () => {
-  const products = [{
-    id: 1,
+  const product = {
     title: 'ABCD',
     date: DateTime.local(2019, 8, 9, 12, 3, 44),
     price: 1123.03,
-  }];
+  };
 
   return (
     <div className='page page__checkout'>
-      <Cart products={products} />
+      <Product product={product} />
       <Payment />
     </div>
   );
