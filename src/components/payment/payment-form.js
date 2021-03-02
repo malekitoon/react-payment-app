@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Formik } from 'formik';
 // eslint-disable-next-line no-unused-vars
@@ -62,7 +63,11 @@ const PaymentForm = ({ onConfirm }) => {
     const url = `${ROOT_URL}/5d8de422310000b19d2b517a`; // success
     // const url = `${ROOT_URL}/5d8de441310000a2612b517c`; // fail
 
-    const data = { ...values, id: parseInt(values.cardType, 10) };
+    const data = {
+      ...values,
+      cardType: parseInt(values.cardType, 10),
+      cardNumber: parseInt(values.cardNumber, 10),
+    };
 
     axios.post(url, data)
       .then(response => onConfirm(response.data))
@@ -139,6 +144,10 @@ const PaymentForm = ({ onConfirm }) => {
       </Formik>
     </div>
   );
+};
+
+PaymentForm.propTypes = {
+  onConfirm: PropTypes.func.isRequired,
 };
 
 export default PaymentForm;

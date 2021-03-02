@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useField } from 'formik';
 
 const FormSelect = ({ label, className, ...props }) => {
@@ -22,6 +23,20 @@ const FormSelect = ({ label, className, ...props }) => {
       </div>
     </div>
   );
+};
+
+FormSelect.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  label: PropTypes.string,
+  className: PropTypes.string,
+};
+
+FormSelect.defaultProps = {
+  id: '',
+  name: '',
+  label: '',
+  className: '',
 };
 
 export default FormSelect;
